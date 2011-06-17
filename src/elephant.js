@@ -4,9 +4,50 @@
 	
 	if(window.debug) console.log("There's an Elephant in the room.")
 	
+	// Local Helpers
+	// -------
+	
+	// `each` and `map`
+	// Taken from [underscore.js](http://documentcloud.github.com/underscore)
+	function each(obj, iterator, context) {
+		if (obj == null) return;
+		if (Array.prototype.forEach && obj.forEach === Array.prototype.forEach) {
+			obj.forEach(iterator, context);
+		} else if (!!(obj.length === 0 || (obj.length && obj.length.toExponential && obj.length.toFixed))) {
+			for (var i = 0, l = obj.length; i < l; i++) {
+				if (iterator.call(context, obj[i], i, obj) === {}) return;
+			}
+		} else {
+			for (var key in obj) {
+				if (hasOwnProperty.call(obj, key)) {
+					if (iterator.call(context, obj[key], key, obj) === {}) return;
+				}
+			}
+		}
+	}
+	
+	function map(obj, iterator, context) {
+		var results = [];
+		if (obj == null) return results;
+		if (Array.prototype.map && obj.map === Array.prototype.map) return obj.map(iterator, context);
+		each(obj, function(value, index, list) {
+			results[results.length] = iterator.call(context, value, index, list);
+		});
+		return results;			
+	}
+	
+	// Elephant.has
+	// ------------
 	Elephant.has = {
 		localStorage : function() {
 			try { return !!localStorage.getItem; } catch (e) {return false};
+		}(),
+		cookies: function() {
+			if(navigator.cookieEnabled) return true;
+			document.cookie = 'elephantcookie=1';
+			var ret = document.cookie.indexOf("cookietest=") != -1;
+			document.cookie = "cookietest=1; expires=Thu, 01-Jan-1970 00:00:01 GMT";
+			return ret;
 		}()
 	};
 	
@@ -54,10 +95,14 @@
 		return object;
 	};
 	
-	Elephant.Trunk.prototype.find = function(guid) {
+	Elephant.Trunk.prototype.find = function(guid) {		
 		return this.data[guid]
 	};
 	
+	Elephant.Trunk.prototype.findAll = function() {		
+		return map(this.data, function(obj){return obj;})
+	};
+
 	Elephant.Trunk.prototype.destroy = function(object) {
 		if(object.guid && object.guid in this.data) {
 			delete this.data[object.guid];

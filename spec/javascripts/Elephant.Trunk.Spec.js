@@ -1,7 +1,7 @@
 describe('Elephant.Trunk', function(){
 	var object;
 	var store;
-
+	
 	beforeEach(function(){
 		object = {
 			aProperty: 'aValue',
@@ -14,7 +14,7 @@ describe('Elephant.Trunk', function(){
 		};
 		
 		store = new Elephant.Trunk('spec-store');
-	})
+	});
 	
 	it('should generate guids', function(){
 		expect(store.guid()).toMatch(/\w{8}-\w{4}-\w{4}-\w{4}-\w{12}/);
@@ -39,6 +39,10 @@ describe('Elephant.Trunk', function(){
 	it('can find an object by ID', function(){
 		object = store.save(object);
 		expect(store.find(object.guid)).toEqual(object);
+	});
+	
+	it('can find all objects', function(){
+		expect(store.findAll()).toBeAnArray();
 	});
 	
 	it('can delete an object', function() {
