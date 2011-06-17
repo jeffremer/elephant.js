@@ -4,9 +4,10 @@
 //		/___/_/ \__/\__/ .__/_//_|_,_/_//_|__/(_)__/ //___/
 //   	              /_/                       |___/                                         
 //	
-// elephant.js 0.0.1 (c) 2011 Jeff Remer
-//
-// MIT License, see [LICENSE](https://github.com/jeffremer/elephant.js/blob/master/LICENSE)
+// elephant.js 0.0.1 (c) 2011 [Jeff Remer](http://jeffremer.com).
+// 
+// [Source](http://github.com/jeffremer/elephant.js) available on GitHub.
+// [MIT License](https://github.com/jeffremer/elephant.js/blob/master/LICENSE).
 
 (function(){
 	var Elephant;
