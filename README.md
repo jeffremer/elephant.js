@@ -55,10 +55,20 @@ console.log(monkey);
 // 	__proto__: Object
 
 // Find a monkey
-store.find(monkey.guid) === monkey // true
+store.find(monkey.guid) === monkey; // true
 
+// Destroy a monkey
+monkey = store.destroy(monkey);
 
+monkey.guid === undefined; // true
 ```
+
+TODO
+-----
+
+* Implement cookie fallback
+* Look at msgpack instead of JSON
+* Make Backbone.sync compatible
 
 License
 --------
